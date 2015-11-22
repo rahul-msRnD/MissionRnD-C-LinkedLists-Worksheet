@@ -22,21 +22,33 @@ struct node {
 };
 
 
-void sll_012_sort(struct node *head){
-	struct node* lists[3] = { NULL, NULL, NULL };
-
-	/* Distribute the cells across the lists. */
-	while (head!= NULL) {
-		/* Cache a pointer to the next cell in the list, since we will be
-		* rewiring this linked list.
-		*/
-		struct node* Next = head->next;
-
-		/* Prepend this cell to the list it belongs to. */
-		head->next = lists[head->data];
-		lists[head->data] = head;
-
-		/* Advance to the next cell in the list. */
-		head = Next;
-	}
+void swap1(struct node *a, struct node *b)
+{
+	int temp = a->data;
+	a->data = b->data;
+	b->data = temp;
 }
+
+void sll_012_sort(struct node *head){
+	int swapped, i;
+	struct node *p1;
+	struct node *lp = NULL;
+	do
+	{
+		swapped = 0;
+		p1 = head;
+
+		while (p1->next != lp)
+		{
+			if (p1->data > p1->next->data)
+			{
+				swap1(p1, p1->next);
+				swapped = 1;
+			}
+			p1 = p1->next;
+		}
+		lp = p1;
+	} while (swapped);
+}
+
+
